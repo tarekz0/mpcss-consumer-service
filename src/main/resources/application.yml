@@ -1,0 +1,65 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mpcss-consumer-service
+
+  artemis:
+    mode: native
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+
+  jms:
+    listener:
+      acknowledge-mode: client
+      concurrency: 1
+      max-concurrency: 5
+
+# MPCSS Configuration
+mpcss:
+  participant:
+    short-name: ${MPCSS_PARTICIPANT_SHORT_NAME:bankx}
+    numeric-code: ${MPCSS_PARTICIPANT_CODE:BNK1}
+    bic: ${MPCSS_PARTICIPANT_BIC:BANKOMRUXXX}
+
+  queues:
+    # Inward queues (messages FROM PS-mpClear TO participant) - We CONSUME from these
+    payment-inward: mpc.${mpcss.participant.short-name}.payment.inward
+    reply-inward: mpc.${mpcss.participant.short-name}.reply.inward
+    registration-inward: mpc.${mpcss.participant.short-name}.reg.inward
+    bulk-registration-inward: mpc.${mpcss.participant.short-name}.regfile.inward
+    heartbeat-inward: mpc.${mpcss.participant.short-name}.heartbeat.inward
+    payment-enquiry-inward: mpc.${mpcss.participant.short-name}.paymentenquiry.inward
+    name-verification-inward: mpc.${mpcss.participant.short-name}.nameverification.inward
+    default-account-inward: mpc.${mpcss.participant.short-name}.defaultaccount.inward
+    reports-inward: mpc.${mpcss.participant.short-name}.reports.inward
+
+    # Outward queues (messages FROM participant TO PS-mpClear) - We PRODUCE to these
+    payment-outward: mpc.${mpcss.participant.short-name}.payment.outward
+    reply-outward: mpc.${mpcss.participant.short-name}.reply.outward
+    registration-outward: mpc.${mpcss.participant.short-name}.reg.outward
+    bulk-registration-outward: mpc.${mpcss.participant.short-name}.regfile.outward
+    heartbeat-outward: mpc.${mpcss.participant.short-name}.heartbeat.outward
+    payment-enquiry-outward: mpc.${mpcss.participant.short-name}.paymentenquiry.outward
+    name-verification-outward: mpc.${mpcss.participant.short-name}.nameverification.outward
+    default-account-outward: mpc.${mpcss.participant.short-name}.defaultaccount.outward
+
+  signature:
+    enabled: true
+    algorithm: SHA256withRSA
+    keystore-path: ${MPCSS_KEYSTORE_PATH:classpath:keystore/mpcss-keystore.jks}
+    keystore-password: ${MPCSS_KEYSTORE_PASSWORD:changeit}
+    key-alias: ${MPCSS_KEY_ALIAS:mpcss-participant}
+    key-password: ${MPCSS_KEY_PASSWORD:changeit}
+    truststore-path: ${MPCSS_TRUSTSTORE_PATH:classpath:keystore/mpcss-truststore.jks}
+    truststore-password: ${MPCSS_TRUSTSTORE_PASSWORD:changeit}
+
+# Logging
+logging:
+  level:
+    om.gov.cbo.mpcss: DEBUG
+    org.apache.activemq: INFO
+    org.springframework.jms: DEBUG
+
