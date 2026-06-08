@@ -35,9 +35,18 @@ spring:
 # MPCSS Configuration
 mpcss:
   participant:
-    short-name: ${MPCSS_PARTICIPANT_SHORT_NAME:bankx}
-    numeric-code: ${MPCSS_PARTICIPANT_CODE:BNK1}
-    bic: ${MPCSS_PARTICIPANT_BIC:BANKOMRUXXX}
+    short-name: ${MPCSS_PARTICIPANT_SHORT_NAME:ompay}
+    numeric-code: ${MPCSS_PARTICIPANT_CODE:OPAY}
+    bic: ${MPCSS_PARTICIPANT_BIC:OMPAYOMRUXXX}
+    participant-id: ${MPCSS_PARTICIPANT_ID:OMPAYOMR}
+
+  # Static/default values from A2A migration (Excel Tab 2 - non clear fields mapping)
+  defaults:
+    registration-code: ${MPCSS_DEFAULT_REGISTRATION_CODE:OPAY001}
+    account-banked: ${MPCSS_DEFAULT_ACCOUNT_BANKED:true}
+    currency: ${MPCSS_DEFAULT_CURRENCY:OMR}
+    batch-source: ${MPCSS_DEFAULT_BATCH_SOURCE:20}
+    session-sequence: ${MPCSS_DEFAULT_SESSION_SEQUENCE:2955}
 
   queues:
     # Inward queues (messages FROM PS-mpClear TO participant) - We CONSUME from these
@@ -79,7 +88,7 @@ mpcss:
 # Logging
 logging:
   level:
-    om.gov.cbo.mpcss: DEBUG
+    mobi.foo.mpcss: DEBUG
     org.apache.activemq: INFO
     org.springframework.jms: DEBUG
     org.hibernate.SQL: DEBUG
