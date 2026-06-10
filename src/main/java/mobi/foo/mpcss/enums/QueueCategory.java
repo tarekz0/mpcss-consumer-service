@@ -12,8 +12,8 @@ public enum QueueCategory {
     BULK_REGISTRATION("regfile", "Bulk registration files (CSV, compressed)"),
     HEARTBEAT("heartbeat", "Heartbeat messages"),
     PAYMENT_ENQUIRY("paymentenquiry", "Payment enquiry messages"),
-    NAME_VERIFICATION("nameverification", "Customer name verification (cstmrreg.20/21)"),
-    DEFAULT_ACCOUNT("defaultaccount", "Check default account (cstmrreg.25/26)"),
+    NAME_VERIFICATION("customername", "Customer name verification (cstmrreg.20/21)"),
+    DEFAULT_ACCOUNT("checkdefault", "Check default account (cstmrreg.25/26)"),
     REPORTS("reports", "Report files (NCP, Reconciliation, Transaction)");
 
     private final String queueSegment;

@@ -52,7 +52,7 @@ public class EnquiryService {
                 "MOBILE".equals(identifierType) ? "MobNb" : "AcctAlias"
         );
 
-        responseProducer.sendNameVerificationRequest(xml);
+        responseProducer.sendCustomerNameRequest(xml);
         log.info("Sent name verification - MsgId: {}, Identifier: {}", messageId, identifier);
         return messageId;
     }
@@ -81,7 +81,7 @@ public class EnquiryService {
                   </IsDefAcctReq>
                 </Document>""".formatted(messageId, mobileNumber);
 
-        responseProducer.sendDefaultAccountCheckRequest(xml);
+        responseProducer.sendCheckDefaultRequest(xml);
         log.info("Sent default account check - MsgId: {}, Mobile: {}", messageId, mobileNumber);
         return messageId;
     }

@@ -27,8 +27,8 @@ import java.util.zip.ZipOutputStream;
  *   <li>Registration Outward: cstmrreg.* registration requests</li>
  *   <li>Heartbeat Outward: heartbeat requests</li>
  *   <li>Payment Enquiry Outward: payment enquiry requests</li>
- *   <li>Name Verification Outward: name verification requests (cstmrreg.20)</li>
- *   <li>Default Account Outward: default account check requests (cstmrreg.25)</li>
+ *   <li>Name Verification Outward: customer name verification requests (cstmrreg.20)</li>
+ *   <li>Check Default Outward: check default account requests (cstmrreg.25)</li>
  * </ul>
  */
 @Slf4j
@@ -134,23 +134,23 @@ public class MpcssResponseProducer {
     /**
      * Send a customer name verification request (cstmrreg.20.01) - Section 5.6.
      */
-    public void sendNameVerificationRequest(String nameVerificationContent) {
+    public void sendCustomerNameRequest(String customerNameContent) {
         String now = LocalDateTime.now().format(DATE_FORMAT);
-        String signature = signatureValidator.signMessage(nameVerificationContent, now);
-        String fullMessage = buildMessageEnvelope("CSTMRREG.20", "", now, signature, nameVerificationContent);
-        sendToQueue(properties.getQueues().getNameVerificationOutward(), fullMessage, null);
-        log.info("Sent name verification request");
+        String signature = signatureValidator.signMessage(customerNameContent, now);
+        String fullMessage = buildMessageEnvelope("CSTMRREG.20", "", now, signature, customerNameContent);
+        sendToQueue(properties.getQueues().getCustomerNameOutward(), fullMessage, null);
+        log.info("Sent customer name verification request");
     }
 
     /**
      * Send a check default account request (cstmrreg.25.01) - Section 5.7.
      */
-    public void sendDefaultAccountCheckRequest(String checkAccountContent) {
+    public void sendCheckDefaultRequest(String checkAccountContent) {
         String now = LocalDateTime.now().format(DATE_FORMAT);
         String signature = signatureValidator.signMessage(checkAccountContent, now);
         String fullMessage = buildMessageEnvelope("CSTMRREG.25", "", now, signature, checkAccountContent);
-        sendToQueue(properties.getQueues().getDefaultAccountOutward(), fullMessage, null);
-        log.info("Sent default account check request");
+        sendToQueue(properties.getQueues().getCheckDefaultOutward(), fullMessage, null);
+        log.info("Sent check default account request");
     }
 
     /**

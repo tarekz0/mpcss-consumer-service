@@ -7,9 +7,8 @@ spring:
 
   artemis:
     mode: native
-    broker-url: ${ARTEMIS_BROKER_URL:tcp://localhost:61616}
-    user: ${ARTEMIS_USER:admin}
-    password: ${ARTEMIS_PASSWORD:admin}
+    broker-url: ${ARTEMIS_BROKER_URL:tcp://mpclrmqtest.cbonet.cboroot.om:4443?sslEnabled=true&trustStorePath=${ARTEMIS_TRUSTSTORE_PATH:classpath:keystore/mpcss-truststore.p12}&trustStorePassword=${ARTEMIS_TRUSTSTORE_PASSWORD:changeit}&keyStorePath=${ARTEMIS_KEYSTORE_PATH:classpath:keystore/mpcss-keystore.p12}&keyStorePassword=${ARTEMIS_KEYSTORE_PASSWORD:changeit}}
+    # Certificate-based authentication - no username/password required
 
   jms:
     listener:
@@ -35,10 +34,11 @@ spring:
 # MPCSS Configuration
 mpcss:
   participant:
-    short-name: ${MPCSS_PARTICIPANT_SHORT_NAME:ompay}
+    short-name: ${MPCSS_PARTICIPANT_SHORT_NAME:opay}
     numeric-code: ${MPCSS_PARTICIPANT_CODE:OPAY}
-    bic: ${MPCSS_PARTICIPANT_BIC:OMPAYOMRUXXX}
+    bic: ${MPCSS_PARTICIPANT_BIC:OMPAYOMR}
     participant-id: ${MPCSS_PARTICIPANT_ID:OMPAYOMR}
+    routing-code: ${MPCSS_ROUTING_CODE:OPAY}
 
   # Static/default values from A2A migration (Excel Tab 2 - non clear fields mapping)
   defaults:
@@ -56,8 +56,8 @@ mpcss:
     bulk-registration-inward: mpc.${mpcss.participant.short-name}.regfile.inward
     heartbeat-inward: mpc.${mpcss.participant.short-name}.heartbeat.inward
     payment-enquiry-inward: mpc.${mpcss.participant.short-name}.paymentenquiry.inward
-    name-verification-inward: mpc.${mpcss.participant.short-name}.nameverification.inward
-    default-account-inward: mpc.${mpcss.participant.short-name}.defaultaccount.inward
+    customer-name-inward: mpc.${mpcss.participant.short-name}.customername.inward
+    check-default-inward: mpc.${mpcss.participant.short-name}.checkdefault.inward
     reports-inward: mpc.${mpcss.participant.short-name}.reports.inward
 
     # Outward queues (messages FROM participant TO PS-mpClear) - We PRODUCE to these
@@ -67,17 +67,19 @@ mpcss:
     bulk-registration-outward: mpc.${mpcss.participant.short-name}.regfile.outward
     heartbeat-outward: mpc.${mpcss.participant.short-name}.heartbeat.outward
     payment-enquiry-outward: mpc.${mpcss.participant.short-name}.paymentenquiry.outward
-    name-verification-outward: mpc.${mpcss.participant.short-name}.nameverification.outward
-    default-account-outward: mpc.${mpcss.participant.short-name}.defaultaccount.outward
+    customer-name-outward: mpc.${mpcss.participant.short-name}.customername.outward
+    check-default-outward: mpc.${mpcss.participant.short-name}.checkdefault.outward
 
   signature:
     enabled: ${MPCSS_SIGNATURE_ENABLED:true}
     algorithm: SHA256withRSA
-    keystore-path: ${MPCSS_KEYSTORE_PATH:classpath:keystore/mpcss-keystore.jks}
+    keystore-type: ${MPCSS_KEYSTORE_TYPE:PKCS12}
+    keystore-path: ${MPCSS_KEYSTORE_PATH:classpath:keystore/mpcss-keystore.p12}
     keystore-password: ${MPCSS_KEYSTORE_PASSWORD:changeit}
     key-alias: ${MPCSS_KEY_ALIAS:mpcss-participant}
     key-password: ${MPCSS_KEY_PASSWORD:changeit}
-    truststore-path: ${MPCSS_TRUSTSTORE_PATH:classpath:keystore/mpcss-truststore.jks}
+    truststore-type: ${MPCSS_TRUSTSTORE_TYPE:PKCS12}
+    truststore-path: ${MPCSS_TRUSTSTORE_PATH:classpath:keystore/mpcss-truststore.p12}
     truststore-password: ${MPCSS_TRUSTSTORE_PASSWORD:changeit}
 
   # Downstream core banking service

@@ -94,25 +94,25 @@ public class MpcssMessageListener {
     }
 
     // ═══════════════════════════════════════════════════════════════════════
-    // Name Verification Inward Queue
+    // Customer Name Inward Queue (Name Verification)
     // ═══════════════════════════════════════════════════════════════════════
     @JmsListener(
-            destination = "${mpcss.queues.name-verification-inward}",
+            destination = "${mpcss.queues.customer-name-inward}",
             containerFactory = "jmsListenerContainerFactory"
     )
-    public void onNameVerificationInward(Message message) {
-        processNonBinaryMessage(message, "NAME_VERIFICATION_INWARD");
+    public void onCustomerNameInward(Message message) {
+        processNonBinaryMessage(message, "CUSTOMER_NAME_INWARD");
     }
 
     // ═══════════════════════════════════════════════════════════════════════
-    // Default Account Inward Queue
+    // Check Default Inward Queue
     // ═══════════════════════════════════════════════════════════════════════
     @JmsListener(
-            destination = "${mpcss.queues.default-account-inward}",
+            destination = "${mpcss.queues.check-default-inward}",
             containerFactory = "jmsListenerContainerFactory"
     )
-    public void onDefaultAccountInward(Message message) {
-        processNonBinaryMessage(message, "DEFAULT_ACCOUNT_INWARD");
+    public void onCheckDefaultInward(Message message) {
+        processNonBinaryMessage(message, "CHECK_DEFAULT_INWARD");
     }
 
     // ═══════════════════════════════════════════════════════════════════════

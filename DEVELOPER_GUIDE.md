@@ -250,12 +250,12 @@ export MPCSS_PARTICIPANT_BIC=NBOKOMRUXXX
 
 ### 4. Digital Certificates (from CBO)
 
-Place your JKS keystore files in:
+Place your PKCS12 keystore files in:
 
 ```
 src/main/resources/keystore/
-├── mpcss-keystore.jks        ← Your private key (for signing outward messages)
-└── mpcss-truststore.jks      ← CBO's public key (for verifying inward messages)
+├── mpcss-keystore.p12         ← Your private key (for signing outward messages & MQ auth)
+└── mpcss-truststore.p12       ← CBO's certificate chain (for verifying inward messages & broker trust)
 ```
 
 Then update the config:
@@ -263,11 +263,13 @@ Then update the config:
 mpcss:
   signature:
     enabled: true
-    keystore-path: classpath:keystore/mpcss-keystore.jks
+    keystore-type: PKCS12
+    keystore-path: classpath:keystore/mpcss-keystore.p12
     keystore-password: YOUR_KEYSTORE_PASSWORD
     key-alias: YOUR_KEY_ALIAS
     key-password: YOUR_KEY_PASSWORD
-    truststore-path: classpath:keystore/mpcss-truststore.jks
+    truststore-type: PKCS12
+    truststore-path: classpath:keystore/mpcss-truststore.p12
     truststore-password: YOUR_TRUSTSTORE_PASSWORD
 ```
 

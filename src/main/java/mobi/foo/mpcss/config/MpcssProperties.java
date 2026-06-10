@@ -19,12 +19,16 @@ public class MpcssProperties {
 
     @Data
     public static class Participant {
-        /** Short name used in queue naming, e.g. "nbo" */
+        /** Short name used in queue naming, e.g. "opay" */
         private String shortName;
-        /** 4-char numeric code prefix for MsgId, e.g. "BNK1" */
+        /** Participant code prefix for MsgId, e.g. "OPAY" */
         private String numericCode;
-        /** BIC code of the participant */
+        /** BIC code of the participant, e.g. "OMPAYOMR" */
         private String bic;
+        /** Participant ID */
+        private String participantId;
+        /** Routing code as registered with MPCSS, e.g. "OPAY" */
+        private String routingCode;
     }
 
     @Data
@@ -36,8 +40,8 @@ public class MpcssProperties {
         private String bulkRegistrationInward;
         private String heartbeatInward;
         private String paymentEnquiryInward;
-        private String nameVerificationInward;
-        private String defaultAccountInward;
+        private String customerNameInward;
+        private String checkDefaultInward;
         private String reportsInward;
 
         // Outward (produce)
@@ -47,18 +51,20 @@ public class MpcssProperties {
         private String bulkRegistrationOutward;
         private String heartbeatOutward;
         private String paymentEnquiryOutward;
-        private String nameVerificationOutward;
-        private String defaultAccountOutward;
+        private String customerNameOutward;
+        private String checkDefaultOutward;
     }
 
     @Data
     public static class Signature {
         private boolean enabled = true;
         private String algorithm = "SHA256withRSA";
+        private String keystoreType = "PKCS12";
         private String keystorePath;
         private String keystorePassword;
         private String keyAlias;
         private String keyPassword;
+        private String truststoreType = "PKCS12";
         private String truststorePath;
         private String truststorePassword;
     }

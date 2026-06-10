@@ -1,0 +1,46 @@
+# ═══════════════════════════════════════════════════════════════════════
+# UAT Environment Configuration - MPCSS CBO Integration
+# ═══════════════════════════════════════════════════════════════════════
+# Broker: mpclrmqtest.cbonet.cboroot.om (172.16.2.81)
+# Port: 4443 (SSL)
+# Auth: Certificate-based (PKCS12) - no username/password
+# Connectivity: OpenVPN config will be provided for pre-SIT local access
+# ═══════════════════════════════════════════════════════════════════════
+
+spring:
+  artemis:
+    mode: native
+    broker-url: tcp://mpclrmqtest.cbonet.cboroot.om:4443?sslEnabled=true&trustStorePath=${ARTEMIS_TRUSTSTORE_PATH}&trustStorePassword=${ARTEMIS_TRUSTSTORE_PASSWORD}&keyStorePath=${ARTEMIS_KEYSTORE_PATH}&keyStorePassword=${ARTEMIS_KEYSTORE_PASSWORD}
+
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+
+# MPCSS Participant Configuration (confirmed by CBO)
+mpcss:
+  participant:
+    short-name: opay
+    numeric-code: OPAY
+    bic: OMPAYOMR
+    participant-id: OMPAYOMR
+    routing-code: OPAY
+
+  signature:
+    enabled: true
+    algorithm: SHA256withRSA
+    keystore-type: PKCS12
+    keystore-path: ${MPCSS_KEYSTORE_PATH}
+    keystore-password: ${MPCSS_KEYSTORE_PASSWORD}
+    key-alias: ${MPCSS_KEY_ALIAS}
+    key-password: ${MPCSS_KEY_PASSWORD}
+    truststore-type: PKCS12
+    truststore-path: ${MPCSS_TRUSTSTORE_PATH}
+    truststore-password: ${MPCSS_TRUSTSTORE_PASSWORD}
+
+logging:
+  level:
+    mobi.foo.mpcss: DEBUG
+    org.apache.activemq: DEBUG
+    org.springframework.jms: DEBUG
+

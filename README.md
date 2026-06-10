@@ -47,8 +47,8 @@ mpcss-consumer-service/
 | `mpc.{name}.regfile.inward/outward` | Binary/ZIP |
 | `mpc.{name}.heartbeat.inward/outward` | XML |
 | `mpc.{name}.paymentenquiry.inward/outward` | XML |
-| `mpc.{name}.nameverification.inward/outward` | XML |
-| `mpc.{name}.defaultaccount.inward/outward` | XML |
+| `mpc.{name}.customername.inward/outward` | XML |
+| `mpc.{name}.checkdefault.inward/outward` | XML |
 | `mpc.{name}.reports.inward` | Binary/ZIP |
 
 ## Quick Start

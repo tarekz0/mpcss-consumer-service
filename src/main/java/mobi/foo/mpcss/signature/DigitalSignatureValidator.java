@@ -53,7 +53,8 @@ public class DigitalSignatureValidator {
             // Load keystore (our private key for signing outward messages)
             keyStore = loadKeyStore(
                     properties.getSignature().getKeystorePath(),
-                    properties.getSignature().getKeystorePassword()
+                    properties.getSignature().getKeystorePassword(),
+                    properties.getSignature().getKeystoreType()
             );
             privateKey = (PrivateKey) keyStore.getKey(
                     properties.getSignature().getKeyAlias(),
@@ -63,7 +64,8 @@ public class DigitalSignatureValidator {
             // Load truststore (PS-mpClear public key for verifying inward messages)
             trustStore = loadKeyStore(
                     properties.getSignature().getTruststorePath(),
-                    properties.getSignature().getTruststorePassword()
+                    properties.getSignature().getTruststorePassword(),
+                    properties.getSignature().getTruststoreType()
             );
 
             log.info("Digital signature keys loaded successfully. Algorithm: {}",
@@ -220,8 +222,8 @@ public class DigitalSignatureValidator {
         }
     }
 
-    private KeyStore loadKeyStore(String path, String password) throws Exception {
-        KeyStore ks = KeyStore.getInstance("JKS");
+    private KeyStore loadKeyStore(String path, String password, String type) throws Exception {
+        KeyStore ks = KeyStore.getInstance(type != null ? type : "PKCS12");
         try (InputStream is = resourceLoader.getResource(path).getInputStream()) {
             ks.load(is, password.toCharArray());
         }
